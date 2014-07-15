@@ -44,18 +44,12 @@
 		    <div>
 		      <label>Question:</label>
 		      <select name="question" placeholder="ask a question" >
-				<option value="1">What do the knights of Ni say?</option>
-				<option value="2">What is the airspeed velocity of an unladen swallow?</option>
-				<option value="3">What is the shape of the beacon at castle Anthrax?</option>
-				<option value="4">Why is the cheese shop so clean?</option>
-				<option value="5">What have the Romans ever done for us?</option>
-				<option value="6">Who wins, Germany or Greece?</option>
 		      </select>
 		    </div>
 		  </div>
 		  <div class="row">
 		    <div >
-		      <input type="submit" value="See the Answer" class="small round button"/>
+		      <input id="submit" type="submit" value="See the Answer" class="small round button"/>
 		    </div>
 		  </div>		
 		</div>  
@@ -66,6 +60,45 @@
     <script src="js/foundation.min.js"></script>
     <script>
       $(document).foundation();
+      
+      $( document ).ready(function() {
+	    $movie = $("select[name='movie']");
+    		$question = $("select[name='question']");
+
+    	  	$movie.change(function() {
+
+    	  		var temp = {};
+    	  		if ($(this).val() == "holygrail") {
+  	    			temp = {
+  	    				1:"What do the knights of Ni say?", 
+  	    				2:"What is the airspeed velocity of an unladen swallow?", 
+  	    				3:"What is the shape of the beacon at castle Anthrax?" };
+    	  		}
+
+			if ($(this).val() == "cheeseshop") {
+		    		temp = {
+		  			4:"Why is the cheese shop so clean?" };
+		    	}
+
+			if ($(this).val() == "lifeofbrian") {
+		    		temp = {
+		  			5:"What have the Romans ever done for us?" };
+			}
+
+			if ($(this).val() == "internationalphilosophymatch") {
+	    			temp = {
+	  				6:"Who wins, Germany or Greece?" };
+			}
+			
+			$question.find('option').remove();
+			$.each(temp,function(key, value) {
+				$question.append('<option value=' + key + '>' + value + '</option>');
+  			});  	    
+    	  
+    	  	});	
+    	  	$movie.change(); // Cause initial movie / skit selection.
+      
+      });      
     </script>
 
     </body>
