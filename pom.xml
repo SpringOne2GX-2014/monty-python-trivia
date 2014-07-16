@@ -72,6 +72,14 @@
 			<scope>test</scope>
 		</dependency>		
 		
+		<!-- 
+		Get "org.openqa.selenium.WebDriverException: java.io.IOException: Invalid locale undefined" error with the 2.13 version.
+		-->
+		<dependency>
+		    <groupId>net.sourceforge.htmlunit</groupId>
+    		<artifactId>htmlunit</artifactId>
+    		<version>2.15</version>
+		</dependency>
 		
 		
 		

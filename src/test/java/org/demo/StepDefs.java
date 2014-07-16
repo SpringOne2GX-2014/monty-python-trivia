@@ -1,7 +1,14 @@
 package org.demo;
 
-import java.io.IOException;
+import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -15,8 +22,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-import static org.junit.Assert.assertTrue;
-
 
 @WebAppConfiguration
 @ContextConfiguration(classes = Config.class)
@@ -27,7 +32,11 @@ public class StepDefs {
 	@Before
 	public void setup() throws IOException {
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-		driver = new MockMvcHtmlUnitDriver(mockMvc, true);
+		
+		//	The tests always failed when executing JavaScript such as document.addEventListener()
+		//	(as found in JQuery).  Adding this chrome capability patched up the problem.
+		Capabilities capabilities = DesiredCapabilities.chrome();
+		driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities);
 	}
 
 	@After
@@ -38,10 +47,8 @@ public class StepDefs {
 	}
 
 	//	TODO:  WHERE I LEFT OFF
-	//	This code came from excellent drums.  It runs but fails on the landing page
-	//	because the page itself is trying to run JQuery, and does not know what a 'document' is.
-	//	To simplify the test I am going to the 'dummy' page with 2 lines of JavaScript, and it still
-	//	does not know what the 'document' object is.
+	//	I can get to the landing page as long as I use the chrome capabilities above.
+	//	Now I need to verify the contents of the select box.
 	
 	@When("^I go to the landing page$")
 	public void i_go_to_the_landing_page() throws Throwable {
@@ -49,13 +56,43 @@ public class StepDefs {
 		//	The driver expects "http" to establish which protocol to use.  
 		//	Don't know why it needs localhost.
 		//	Also don't know why it needs the servlet mapping or how it determined 'mpt' since this is only known to maven or eclipse; it is not in any code.
-		driver.get("http://localhost/mpt/dummy");
-		System.out.println("Page source is:" + driver.getPageSource());
+		driver.get("http://localhost/mpt/");
 	}
 
 
 	@Then("^I expect to see a list of Monty Python movies$")
 	public void i_expect_to_see_movie_list() throws Throwable {
-		assertTrue(driver.findElementByName("movie") != null);
+		WebElement webElement = driver.findElementByName("movie");
+		assertTrue("Can't find the selection element with movies and skits.", webElement != null);
+		assertTrue("Movie list should be visible.", webElement.isDisplayed() );
+		assertTrue("Movie selections should be enabled.", webElement.isEnabled());
+
+		List<WebElement> options = webElement.findElements(By.tagName("option"));
+		assertTrue("Should have at least 3 options in the list", options.size() > 3);
+		
+		for (WebElement option : options) {
+			System.out.println(option.getText());
+		}
+
 	}
+
+	@Then("^one of the options should be 'Holy Grail'$")
+	public void i_expect_holy_grail() throws Throwable {
+		WebElement webElement = driver.findElementByName("movie");
+		List<WebElement> options = webElement.findElements(By.tagName("option"));
+		
+		String text;
+		boolean foundTheHolyGrail = false;
+		for (WebElement option : options) {
+			text = option.getText();
+			if ("Holy Grail".equals(text)) {
+				foundTheHolyGrail = true;
+				break;
+			}
+		}
+		assertTrue("Holy Grail doesn't seem to be one of the options.", foundTheHolyGrail);
+
+	}
+
+
 }
