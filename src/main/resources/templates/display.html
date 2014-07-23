@@ -20,20 +20,21 @@
     </nav>
 
     <div class="row">
-      <div class="large-12 columns">
-        <h3>The answer:</h3>
-        <hr/>
+      <div class="large-8 columns">
+        <h3>The question:</h3>
+      	<div class="panel" >
+          <p><em th:text="${question.question}"/></p>
+	    </div>
       </div>
     </div>
-
+    
+    
     <div class="row">
-      <div class="large-12 columns">
+      <div class="large-8 columns">
+        <h3>The answer:</h3>
       	<div class="panel" >
-          <p><em th:text="${answer}"/></p>
-          <hr/>
-          <p>The application port is <em th:text="${port}"/></p>
+          <p><em th:text="${question.answer}"/></p>
 	    </div>
-        <hr/>
       </div>
     </div>
     
