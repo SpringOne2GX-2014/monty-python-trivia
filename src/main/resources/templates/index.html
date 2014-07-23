@@ -33,10 +33,6 @@
 		    <div>
 		      <label>Movie / Skit</label>
 		      <select name="movie" placeholder="select a movie or skit" >
-				<option value="holygrail">Holy Grail</option>
-				<option value="cheeseshop">Cheese Shop</option>
-				<option value="lifeofbrian">Life of Brian</option>
-				<option value="internationalphilosophymatch">International Philosophy Match</option>
 		      </select>
 		    </div>
 		  </div>
@@ -58,48 +54,7 @@
 
     <script src="js/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
-    <script>
-      $(document).foundation();
-      
-      $( document ).ready(function() {
-	    $movie = $("select[name='movie']");
-    		$question = $("select[name='question']");
-
-    	  	$movie.change(function() {
-
-    	  		var temp = {};
-    	  		if ($(this).val() == "holygrail") {
-  	    			temp = {
-  	    				1:"What do the knights of Ni say?", 
-  	    				2:"What is the airspeed velocity of an unladen swallow?", 
-  	    				3:"What is the shape of the beacon at castle Anthrax?" };
-    	  		}
-
-			if ($(this).val() == "cheeseshop") {
-		    		temp = {
-		  			4:"Why is the cheese shop so clean?" };
-		    	}
-
-			if ($(this).val() == "lifeofbrian") {
-		    		temp = {
-		  			5:"What have the Romans ever done for us?" };
-			}
-
-			if ($(this).val() == "internationalphilosophymatch") {
-	    			temp = {
-	  				6:"Who wins, Germany or Greece?" };
-			}
-			
-			$question.find('option').remove();
-			$.each(temp,function(key, value) {
-				$question.append('<option value=' + key + '>' + value + '</option>');
-  			});  	    
-    	  
-    	  	});	
-    	  	$movie.change(); // Cause initial movie / skit selection.
-      
-      });      
-    </script>
+    <script src="js/main.js"></script>
 
     </body>
 </html>
