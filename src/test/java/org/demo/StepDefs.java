@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.io.IOException;
 
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,10 +46,15 @@ public class StepDefs {
 
 
 	@Given("^I am on the first page$")
-	public void on_first_page() throws Throwable { fail("not implemented"); }
+	public void on_first_page() throws Throwable { 
+		driver.get("http://localhost/mpt/");		
+	}
 
 	@When("^I select 'Holy Grail'$")
-	public void i_select_category() throws Throwable { }
+	public void i_select_category() throws Throwable {
+		WebElement webElement = driver.findElementByName("movie");
+
+	}
 
 	@And("^I select 'What do the Knights of Ni say'?$")
 	public void i_select_question() throws Throwable { }

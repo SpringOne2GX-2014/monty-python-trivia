@@ -12,6 +12,16 @@ public class Category {
 	String name;
 
 
+	public Category() {
+		super();
+	}	
+	
+	public Category(long id, String name) {
+		this();
+		this.id = id;
+		this.name = name;
+	}
+
 	public long getId() {
 		return id;
 	}

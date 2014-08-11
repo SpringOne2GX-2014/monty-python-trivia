@@ -10,3 +10,4 @@ INSERT INTO question(id,category,question,answer) values (4,2,'Why is the cheese
 INSERT INTO question(id,category,question,answer) values (5,3,'What have the Romans ever done for us?','Apart from better sanitation and medicine and education and irrigation and public health and roads and a freshwater system and baths and public order... nothing.');
 INSERT INTO question(id,category,question,answer) values (6,4,'Who wins, Germany or Greece?','Greece');
 INSERT INTO question(id,category,question,answer) values (7,4,'What is the final score in the match?','Greece 1, Germany 0');
+commit;
