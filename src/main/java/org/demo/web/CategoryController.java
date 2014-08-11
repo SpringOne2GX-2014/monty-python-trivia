@@ -31,11 +31,12 @@ public class CategoryController {
 		results.add(new Category(3, "Life of Brian"));
 		results.add(new Category(4, "International Philosophy Match"));
 		
-		return results;
+		return results; 
 	}
 
 	@RequestMapping("/categories/{id}/questions")
 	public @ResponseBody Iterable<Question> getQuestionsForCategory(@PathVariable long id) {
-		return questionRepository.findByCategory(id);
+		Iterable<Question> questions = questionRepository.findByCategory(id);
+		return questions;
 	}
 }

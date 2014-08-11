@@ -1,9 +1,11 @@
 package org.demo;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -26,14 +28,18 @@ import cucumber.api.java.en.When;
 @WebAppConfiguration
 @ContextConfiguration(classes = Config.class)
 public class StepDefs {
-
-	@Autowired WebApplicationContext context;
+	@Autowired private WebApplicationContext context;
 	MockMvcHtmlUnitDriver driver;
+	IndexPage indexPage;
 
 	@Before
 	public void setup() throws IOException {
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-		Capabilities capabilities = DesiredCapabilities.chrome();
+		
+		//	The tests always failed when executing JavaScript such as document.addEventListener()
+		//	(as found in JQuery).  Adding this chrome capability patched up the problem.
+		//	Update: chrome doesn't seem to get AJAX replies from the server to work.  FireFox does:
+		Capabilities capabilities = DesiredCapabilities.firefox(); 
 		driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities);
 	}
 
@@ -44,20 +50,36 @@ public class StepDefs {
 		}
 	}
 
-
-	@Given("^I am on the first page$")
-	public void on_first_page() throws Throwable { 
-		driver.get("http://localhost/mpt/");		
+	//	TODO:  WHERE I LEFT OFF
+	//	I can get to the landing page as long as I use the chrome capabilities above.
+	//	The movie selection box was empty.  This was because the result of the AJAX call was never processed by the JQuery code.  Switching from chrome to FF resolved this.
+	
+	@Given("I am on the first page")	
+	@When("I go to the landing page")
+	public void i_go_to_the_landing_page() throws Throwable {
+		indexPage = IndexPage.to(driver);
 	}
 
-	@When("^I select 'Holy Grail'$")
+
+	@Then("I expect to see a list of Monty Python movies")
+	public void i_expect_to_see_movie_list() throws Throwable {
+		assertTrue("Should have at least 3 options in the list", indexPage.getNumberOfMovieOptions() > 3);  //Presently failing now that I'm populating this with AJAX, static was fine.
+	}
+
+	@Then("one of the options should be 'Holy Grail'")
+	public void i_expect_holy_grail() throws Throwable {
+		assertTrue("Holy Grail doesn't seem to be one of the options.", indexPage.isMovieOptionPresent("Holy Grail"));
+	}
+
+	@When("I select 'Holy Grail'")
 	public void i_select_category() throws Throwable {
-		WebElement webElement = driver.findElementByName("movie");
-
+		indexPage.selectMovieOption("Holy Grail");
 	}
 
-	@And("^I select 'What do the Knights of Ni say'?$")
-	public void i_select_question() throws Throwable { }
+	@When("I select 'What do the Knights of Ni say'")
+	public void i_select_question() throws Throwable { 
+		indexPage.selectQuestionOption("What do the Knights of Ni say?");
+	}
 	
 	@And("^I press submit$")
 	public void submit() throws Throwable { }

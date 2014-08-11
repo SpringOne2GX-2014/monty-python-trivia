@@ -1,3 +1,7 @@
+CREATE TABLE category (id INTEGER, name VARCHAR(1000));
+
+CREATE TABLE question (id INTEGER, category INTEGER, question VARCHAR(1000), answer VARCHAR(1000) );
+
 INSERT INTO category (id, name) values (1, 'Holy Grail');
 INSERT INTO category (id, name) values (2, 'Cheese Shop');
 INSERT INTO category (id, name) values (3, 'Life of Brian');
