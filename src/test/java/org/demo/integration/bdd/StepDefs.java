@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
+import com.gargoylesoftware.htmlunit.WebClient;
 import org.demo.Config;
 import org.demo.integration.pages.AnswerPage;
 import org.demo.integration.pages.QuestionPage;
@@ -47,7 +49,14 @@ public class StepDefs {
 		//	(as found in JQuery).  Adding this chrome capability patched up the problem.
 		//	Update: chrome doesn't seem to get AJAX replies from the server to work.  FireFox does:
 		Capabilities capabilities = DesiredCapabilities.firefox(); 
-		driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities);
+		driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities) {
+			@Override
+			protected WebClient configureWebClient(WebClient client) {
+				client = super.configureWebClient(client);
+				client.setAjaxController(new NicelyResynchronizingAjaxController());
+				return client;
+			}
+		};
 	}
 
 	@After

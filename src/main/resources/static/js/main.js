@@ -17,7 +17,7 @@ function populateCategories() {
 	//	TODO: Will not work in HtmlUnit unless async is turned off!
     $.ajax({
         url: "categories",
-        async: false,
+        async: true,
         error:  errorReporter,
         complete: complete
     }).then(function(jsonObj) {
@@ -46,7 +46,7 @@ function populateQuestions(category) {
 	//	TODO: Will not work in HtmlUnit unless async is turned off!
     $.ajax({
         url: "categories/" + category + "/questions",
-        async: false,
+        async: true,
         error:  errorReporter,
         complete: complete
     }).then(function(jsonObj) {
