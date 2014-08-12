@@ -141,9 +141,6 @@
 		<repository>
 			<id>spring-snapshot</id>
 			<url>http://repo.spring.io/libs-snapshot</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
 		</repository>
 	</repositories>
 </project>
