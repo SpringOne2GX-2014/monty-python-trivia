@@ -52,7 +52,7 @@ function populateQuestions(category) {
     }).then(function(jsonObj) {
         console.log("returned JSON for questions: " + jsonObj);
     	//	Place each returned question into the list:
-        var listItems;
+        var listItems = "";
         for (var i = 0; i < jsonObj.length; i++){
             listItems+= "<option value='" + jsonObj[i].id + "'>" + jsonObj[i].question + "</option>";
         }

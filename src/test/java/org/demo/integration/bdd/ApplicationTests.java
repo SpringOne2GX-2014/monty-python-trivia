@@ -1,4 +1,4 @@
-package org.demo;
+package org.demo.integration.bdd;
 
 import org.junit.runner.RunWith;
 

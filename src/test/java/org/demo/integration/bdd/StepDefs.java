@@ -1,10 +1,13 @@
-package org.demo;
+package org.demo.integration.bdd;
 
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
 
+import org.demo.Config;
+import org.demo.integration.pages.AnswerPage;
+import org.demo.integration.pages.QuestionPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebElement;
@@ -28,10 +31,14 @@ import cucumber.api.java.en.When;
 @WebAppConfiguration
 @ContextConfiguration(classes = Config.class)
 public class StepDefs {
+	
 	@Autowired private WebApplicationContext context;
+	
 	MockMvcHtmlUnitDriver driver;
-	IndexPage indexPage;
-
+	QuestionPage questionPage;
+	AnswerPage answerPage;
+	String lastQuestionAsked = "";
+	
 	@Before
 	public void setup() throws IOException {
 		MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
@@ -57,39 +64,56 @@ public class StepDefs {
 	@Given("I am on the first page")	
 	@When("I go to the landing page")
 	public void i_go_to_the_landing_page() throws Throwable {
-		indexPage = IndexPage.to(driver);
+		questionPage = QuestionPage.to(driver);
 	}
 
 
 	@Then("I expect to see a list of Monty Python movies")
 	public void i_expect_to_see_movie_list() throws Throwable {
-		assertTrue("Should have at least 3 options in the list", indexPage.getNumberOfMovieOptions() > 3);  //Presently failing now that I'm populating this with AJAX, static was fine.
+		assertTrue("Should have at least 3 options in the list", questionPage.getNumberOfMovieOptions() > 3);  //Presently failing now that I'm populating this with AJAX, static was fine.
 	}
 
+	
 	@Then("one of the options should be 'Holy Grail'")
 	public void i_expect_holy_grail() throws Throwable {
-		assertTrue("Holy Grail doesn't seem to be one of the options.", indexPage.isMovieOptionPresent("Holy Grail"));
+		assertTrue("Holy Grail doesn't seem to be one of the options.", questionPage.isMovieOptionPresent("Holy Grail"));
 	}
 
+	
 	@When("I select 'Holy Grail'")
 	public void i_select_category() throws Throwable {
-		indexPage.selectMovieOption("Holy Grail");
+		questionPage.selectMovieOption("Holy Grail");
 	}
 
-	@When("I select 'What do the Knights of Ni say'")
-	public void i_select_question() throws Throwable { 
-		indexPage.selectQuestionOption("What do the Knights of Ni say?");
+	
+	@And("I select 'What do the Knights of Ni say'")
+	public void i_select_question() { 
+		lastQuestionAsked = "What do the Knights of Ni say?";
+		questionPage.selectQuestionOption(lastQuestionAsked);
 	}
 	
-	@And("^I press submit$")
-	public void submit() throws Throwable { }
+	
+	@And("I press submit")
+	public void submit()  {
+		questionPage.submit();
+	}
 
-	@Then("^I should see the answer page$")
-	public void on_answer_page() throws Throwable { }
+	
+	@Then("I should see the answer page")
+	public void on_answer_page() { 
+		assertTrue("Was expecting to be on the Answer page", AnswerPage.isCurrentPage(driver));
+		answerPage = AnswerPage.at(driver);
+	}
 
-	@And("^I should see the question displayed$")
-	public void question_displayed() throws Throwable { }
+	
+	@And("I should see the question displayed")
+	public void question_displayed() { 
+		assertTrue("Was expecting to see the question \"" + lastQuestionAsked + "\".", answerPage.hasQuestion(lastQuestionAsked)) ;
+	}
 
-	@And("^I should see the answer 'Ni!'$")
-	public void answer_displayed() throws Throwable { }
+	
+	@And("I should see the answer 'Ni!'")
+	public void answer_displayed() { 
+		assertTrue("Was expecting to see the answer 'Ni!'", answerPage.hasAnswer("Ni!")) ;
+	}
 }

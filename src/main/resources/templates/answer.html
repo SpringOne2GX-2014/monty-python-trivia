@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Monty Python Trivia</title>
+    <title>Monty Python Trivia - Answer</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <script src="js/modernizr.js"></script>
   </head>
@@ -23,7 +23,7 @@
       <div class="large-8 columns">
         <h3>The question:</h3>
       	<div class="panel" >
-          <p><em th:text="${question.question}"/></p>
+          <p><em id="questionDisplay" th:text="${question.question}"/></p>
 	    </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
       <div class="large-8 columns">
         <h3>The answer:</h3>
       	<div class="panel" >
-          <p><em th:text="${question.answer}"/></p>
+          <p><em id="answerDisplay" th:text="${question.answer}"/></p>
 	    </div>
       </div>
     </div>

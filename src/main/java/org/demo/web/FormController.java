@@ -17,7 +17,7 @@ public class FormController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String showForm() {
-		return "index";
+		return "question";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -26,6 +26,6 @@ public class FormController {
 		Question question = repository.findOne(questionId);
 		model.addAttribute("question", question);
 		
-		return "display";
+		return "answer";
 	}	
 }

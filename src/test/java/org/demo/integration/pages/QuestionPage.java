@@ -1,31 +1,39 @@
-package org.demo;
+package org.demo.integration.pages;
+
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import static org.junit.Assert.*;
-
-public class IndexPage {
+public class QuestionPage  {
 	
-    private WebElement movie;
+	private WebElement movie;
 
     private WebElement question;
 
-    /**
+    @FindBy(css = "input[type=submit]")
+    private WebElement submitButton;
+
+	public static String getUrl() {
+		return "http://localhost/mpt/";
+	}
+
+    
+	/**
      * Have WebDriver go to the index page, and return an 
      * object that represents this page in future tests.
      */
-    public static IndexPage to(WebDriver driver) {
+    public static QuestionPage to(WebDriver driver) {
 		//	The driver expects "http" to establish which protocol to use.  
 		//	Don't know why it needs localhost.
 		//	Also don't know why it needs the servlet mapping or how it determined 'mpt' since this is only known to maven or eclipse; it is not in any code.
-        driver.get("http://localhost/mpt/");
-        return PageFactory.initElements(driver, IndexPage.class);
+        driver.get(getUrl());
+        return PageFactory.initElements(driver, QuestionPage.class);
     }
     
     
@@ -39,6 +47,9 @@ public class IndexPage {
     }
 
     
+    /**
+     * See if the given option is present in the movie selection list, like "Holy Grail".
+     */
     public boolean isMovieOptionPresent(String movieOption) {
 		testElementBasics(movie);
     	Select select = new Select(movie);
@@ -56,16 +67,25 @@ public class IndexPage {
 		return found;
     }
 
-    
+    /**
+     *	Select the given movie from the list of movies, like "Holy Grail". 
+     */
     public void selectMovieOption(String movieOption) {
-		this.selectOption(movie, movieOption);
+		selectOption(movie, movieOption);
     }
     
     
-    public void selectQuestionOption(String question) {
-		this.selectOption(movie, question);
+    /**
+     *	Select the given question from the list of questions, like "What do the Knights of Ni say?". 
+     */
+    public void selectQuestionOption(String questionOption) {
+		selectOption(question, questionOption);
     }
     
+    
+    public void submit() {
+    	submitButton.click();
+    }
     
     private void selectOption(WebElement webElement, String optionToSelect) {
 		testElementBasics(webElement);
