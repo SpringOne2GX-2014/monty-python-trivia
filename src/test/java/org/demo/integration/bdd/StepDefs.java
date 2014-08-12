@@ -57,9 +57,6 @@ public class StepDefs {
 		}
 	}
 
-	//	TODO:  WHERE I LEFT OFF
-	//	I can get to the landing page as long as I use the chrome capabilities above.
-	//	The movie selection box was empty.  This was because the result of the AJAX call was never processed by the JQuery code.  Switching from chrome to FF resolved this.
 	
 	@Given("I am on the first page")	
 	@When("I go to the landing page")
@@ -70,13 +67,17 @@ public class StepDefs {
 
 	@Then("I expect to see a list of Monty Python movies")
 	public void i_expect_to_see_movie_list() throws Throwable {
-		assertTrue("Should have at least 3 options in the list", questionPage.getNumberOfMovieOptions() > 3);  //Presently failing now that I'm populating this with AJAX, static was fine.
+		assertTrue(
+			"Should have at least 3 options in the list", 
+			questionPage.getNumberOfMovieOptions() > 3);  
 	}
 
 	
 	@Then("one of the options should be 'Holy Grail'")
 	public void i_expect_holy_grail() throws Throwable {
-		assertTrue("Holy Grail doesn't seem to be one of the options.", questionPage.isMovieOptionPresent("Holy Grail"));
+		assertTrue(
+			"Holy Grail doesn't seem to be one of the options.", 
+			questionPage.isMovieOptionPresent("Holy Grail"));
 	}
 
 	
@@ -101,19 +102,25 @@ public class StepDefs {
 	
 	@Then("I should see the answer page")
 	public void on_answer_page() { 
-		assertTrue("Was expecting to be on the Answer page", AnswerPage.isCurrentPage(driver));
+		assertTrue(
+			"Was expecting to be on the Answer page", 
+			AnswerPage.isCurrentPage(driver));
 		answerPage = AnswerPage.at(driver);
 	}
 
 	
 	@And("I should see the question displayed")
 	public void question_displayed() { 
-		assertTrue("Was expecting to see the question \"" + lastQuestionAsked + "\".", answerPage.hasQuestion(lastQuestionAsked)) ;
+		assertTrue(
+			"Was expecting to see the question \"" + lastQuestionAsked + "\".", 
+			answerPage.hasQuestion(lastQuestionAsked)) ;
 	}
 
 	
 	@And("I should see the answer 'Ni!'")
 	public void answer_displayed() { 
-		assertTrue("Was expecting to see the answer 'Ni!'", answerPage.hasAnswer("Ni!")) ;
+		assertTrue(
+			"Was expecting to see the answer 'Ni!'", 
+			answerPage.hasAnswer("Ni!")) ;
 	}
 }
