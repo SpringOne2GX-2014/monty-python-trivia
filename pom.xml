@@ -139,8 +139,8 @@
 
 	<repositories>
 		<repository>
-			<id>spring-milestone</id>
-			<url>http://repo.spring.io/libs-milestone</url>
+			<id>spring-snapshot</id>
+			<url>http://repo.spring.io/libs-snapshot</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
