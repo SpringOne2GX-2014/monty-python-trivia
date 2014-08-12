@@ -51,8 +51,8 @@
 		
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-test-mvc-htmlunit</artifactId>
-			<version>1.0.0.M1</version>
+			<artifactId>spring-test-htmlunit</artifactId>
+			<version>1.0.0.BUILD-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
