@@ -1,9 +1,6 @@
 package org.demo.web;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.demo.domain.Category;
 import org.demo.domain.Question;
 import org.demo.repository.CategoryRepository;
@@ -23,13 +20,15 @@ public class CategoryController {
 	@RequestMapping("/categories")
 	public @ResponseBody Iterable<Category> getCategories() {
 		
-		//	TODO: This is failing when running in HtmlUnit due to a transaction serialization error.  So instead, just populate the list manually:
-//		Iterable<Category> results = categoryRepository.findAll();
-		List <Category> results = new ArrayList<Category>();
-		results.add(new Category(1, "Holy Grail"));
-		results.add(new Category(2, "Cheese Shop"));
-		results.add(new Category(3, "Life of Brian"));
-		results.add(new Category(4, "International Philosophy Match"));
+		//	This was failing when running in HtmlUnit due to a transaction serialization error.  So instead, just populate the list manually.
+		//	FIXED - The problem was populating the database via schema.sql and data.sql, which gets deleted by hibernate during startup (because
+		//	spring boot assumes an in memory database should always start empty.  So instead moved the initialization to hibernate specific import.sql:
+		Iterable<Category> results = categoryRepository.findAll();
+//		List <Category> results = new ArrayList<Category>();
+//		results.add(new Category(1, "Holy Grail"));
+//		results.add(new Category(2, "Cheese Shop"));
+//		results.add(new Category(3, "Life of Brian"));
+//		results.add(new Category(4, "International Philosophy Match"));
 		
 		return results; 
 	}
