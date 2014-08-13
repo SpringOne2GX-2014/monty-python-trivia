@@ -69,13 +69,13 @@ public class StepDefs {
 	
 	@Given("I am on the first page")	
 	@When("I go to the landing page")
-	public void i_go_to_the_landing_page() throws Throwable {
+	public void i_go_to_the_landing_page() {
 		questionPage = QuestionPage.to(driver);
 	}
 
 
 	@Then("I expect to see a list of Monty Python movies")
-	public void i_expect_to_see_movie_list() throws Throwable {
+	public void i_expect_to_see_movie_list() {
 		assertTrue(
 			"Should have at least 3 options in the list", 
 			questionPage.getNumberOfMovieOptions() > 3);  
@@ -83,7 +83,7 @@ public class StepDefs {
 
 	
 	@Then("one of the options should be 'Holy Grail'")
-	public void i_expect_holy_grail() throws Throwable {
+	public void i_expect_holy_grail() {
 		assertTrue(
 			"Holy Grail doesn't seem to be one of the options.", 
 			questionPage.isMovieOptionPresent("Holy Grail"));
@@ -91,7 +91,7 @@ public class StepDefs {
 
 	
 	@When("I select 'Holy Grail'")
-	public void i_select_category() throws Throwable {
+	public void i_select_category() {
 		questionPage.selectMovieOption("Holy Grail");
 	}
 
