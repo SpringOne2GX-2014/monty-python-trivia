@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -22,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration(classes = Config.class)
 @WebAppConfiguration
 public class MockMvcTest {
+	
 	@Autowired
 	WebApplicationContext context;
 
@@ -44,8 +46,15 @@ public class MockMvcTest {
 
 	@Test
 	public void categoriesJsonPath() throws Exception {
+		ResultMatcher containsMovies = jsonPath("$.[*].name[*]")
+			.value(contains(
+				"Holy Grail",
+				"Cheese Shop",
+				"Life of Brian",
+				"International Philosophy Match"));
+		
 		mockMvc.perform(get("/categories"))
-			.andExpect(jsonPath("$.[*].name[*]").value(contains("Holy Grail","Cheese Shop","Life of Brian","International Philosophy Match")));
+			.andExpect(containsMovies);
 	}
 
 	@Test
