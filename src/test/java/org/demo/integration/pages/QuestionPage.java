@@ -13,7 +13,6 @@ import org.openqa.selenium.support.ui.Select;
 public class QuestionPage  {
 	
 	private WebElement movie;
-
     private WebElement question;
 
     @FindBy(css = "input[type=submit]")
@@ -42,8 +41,8 @@ public class QuestionPage  {
      */
     public int getNumberOfMovieOptions() {
 		testElementBasics(movie);
-    	Select select = new Select(movie);
-    	return select.getOptions().size();
+	    	Select select = new Select(movie);
+	    	return select.getOptions().size();
     }
 
     
@@ -52,7 +51,7 @@ public class QuestionPage  {
      */
     public boolean isMovieOptionPresent(String movieOption) {
 		testElementBasics(movie);
-    	Select select = new Select(movie);
+    		Select select = new Select(movie);
 		List<WebElement> options = select.getOptions();
 		
 		String text;
