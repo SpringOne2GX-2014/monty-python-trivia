@@ -1,15 +1,8 @@
 package org.demo.integration.pages;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.lift.find.PageTitleFinder;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
 public class AnswerPage {
 	
@@ -37,10 +30,10 @@ public class AnswerPage {
     }	
 	
     public boolean hasQuestion(String question) {
-    	return questionDisplay.getText().equals(question);
+    		return questionDisplay.getText().equals(question);
     }
 
     public boolean hasAnswer(String answer) {
-    	return answerDisplay.getText().equals(answer);
+    		return answerDisplay.getText().equals(answer);
     }
 }
