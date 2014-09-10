@@ -44,19 +44,22 @@ import spock.lang.Stepwise
 class GebTest extends GebReportingSpec {
 	@Autowired
 	WebApplicationContext context
-	
-	def setup() {
-	    MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).alwaysDo(print()).build()
-	    Capabilities capabilities = DesiredCapabilities.firefox(); 
-		browser.driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities) {
-			@Override
-			protected WebClient configureWebClient(WebClient client) {
-				client = super.configureWebClient(client)
-				client.ajaxController = new NicelyResynchronizingAjaxController()
-				return client;
-			}
-		}
-	}
+
+    def setup() {
+        MockMvc mockMvc = MockMvcBuilders
+            .webAppContextSetup(context)
+            .alwaysDo(print())
+            .build()
+        Capabilities capabilities = DesiredCapabilities.firefox();
+        browser.driver = new MockMvcHtmlUnitDriver(mockMvc, capabilities) {
+            @Override
+            protected WebClient configureWebClient(WebClient client) {
+                client = super.configureWebClient(client)
+                client.ajaxController = new NicelyResynchronizingAjaxController()
+                return client;
+            }
+        }
+    }
 
 	def 'I select Holy Grail'() {
 		setup:
