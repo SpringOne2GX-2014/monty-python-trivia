@@ -42,20 +42,20 @@
 		    <artifactId>hsqldb</artifactId>
 		    <scope>runtime</scope>
 		</dependency>
-				
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test-htmlunit</artifactId>
 			<version>1.0.0.BUILD-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
@@ -68,6 +68,10 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-spring</artifactId>
@@ -87,24 +91,24 @@
 			<artifactId>selenium-htmlunit-driver</artifactId>
 			<version>2.40.0</version>
 			<scope>test</scope>
-		</dependency>		
-		
+		</dependency>
+
 		<!-- necessary only if you are using WebDriver -->
 		<dependency>
 		  <groupId>org.seleniumhq.selenium</groupId>
 		  <artifactId>selenium-htmlunit-driver</artifactId>
 		  <version>2.42.2</version>
 		  <scope>test</scope>
-		</dependency>		
-		
+		</dependency>
+
 		<!-- not mentioned in the blog -->
     <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-java</artifactId>
         <version>2.42.2</version>
-    </dependency>  		
-		
-		<!-- 
+    </dependency>
+
+		<!--
 		Get "org.openqa.selenium.WebDriverException: java.io.IOException: Invalid locale undefined" error with the 2.13 version.
 		-->
 		<dependency>
@@ -112,7 +116,7 @@
     		<artifactId>htmlunit</artifactId>
     		<version>2.15</version>
 		</dependency>
-		
+
 <dependency>
   <groupId>org.gebish</groupId>
   <artifactId>geb-spock</artifactId>

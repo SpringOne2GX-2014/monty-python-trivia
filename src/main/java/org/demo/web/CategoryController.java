@@ -15,12 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CategoryController {
 
-	@Autowired CategoryRepository categoryRepository;
-	@Autowired QuestionRepository questionRepository;
-	
+	CategoryRepository categoryRepository;
+	QuestionRepository questionRepository;
+
+	@Autowired
+	public CategoryController(CategoryRepository categoryRepository,
+			QuestionRepository questionRepository) {
+		this.categoryRepository = categoryRepository;
+		this.questionRepository = questionRepository;
+	}
+
 	@RequestMapping("/categories")
 	public Iterable<Category> getCategories() {
-		
+
 		//	This was failing when running in HtmlUnit due to a transaction serialization error.  So instead, just populate the list manually.
 		//	FIXED - The problem was populating the database via schema.sql and data.sql, which gets deleted by hibernate during startup (because
 		//	spring boot assumes an in memory database should always start empty.  So instead moved the initialization to hibernate specific import.sql:
@@ -30,8 +37,8 @@ public class CategoryController {
 //		results.add(new Category(2, "Cheese Shop"));
 //		results.add(new Category(3, "Life of Brian"));
 //		results.add(new Category(4, "International Philosophy Match"));
-		
-		return results; 
+
+		return results;
 	}
 
 	@RequestMapping("/categories/{id}/questions")
